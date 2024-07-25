@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            width: 100%;
+        }
+        table,th,tr,td{
+            border: 5px solid rgb(85, 0, 255);
+            border-collapse: collapse;
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<!-- Applying Search based on input & sort functionality-->
+ <input type="text" id="inp">
+ <button id="ser">search</button>
+ <button id="a">Sort by ID</button>
+ <button id="b">Sort by Name</button> <br><br>
+ <table id="tbl">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr></tr>
+    </tbody>
+ </table>
+ <script>
+    let obj = [
+        { id:101,name:"abc"},
+        { id:103,name:"xyz" },
+        { id:102,name:"daa" },
+        { id:104,name:"ccc" }        
+    ]
+    let tbl = document.querySelector("#tbl tbody")
+    let s_one = document.getElementById("a")
+    let s_two = document.getElementById("b")
+    let search = document.getElementById("ser")
+
+    function renderTable(data){
+        tbl.innerHTML = ""
+        data.forEach(item => {
+            let row = tbl.insertRow()//adding new row in table dynamically
+            row.insertCell(0).textContent=item.id
+            row.insertCell(1).textContent=item.name
+        })
+    }
+
+    //sorting based on id
+    s_one.addEventListener("click",()=>{
+        obj.sort((a,b)=>a.id-b.id)
+        renderTable(obj)
+    })
+
+    //sorting based on name
+    s_two.addEventListener("click",()=>{
+        obj.sort((a,b)=>a.name.localeCompare(b.name))
+        renderTable(obj)
+    })
+
+    //searching based on name or id
+    search.addEventListener("click",()=>{
+        let inp = document.getElementById("inp").value
+       let upd =  obj.filter((i)=>i.id.toString()===inp || i.name.startsWith(inp))
+        renderTable(upd)
+    })
+    //initial render of table
+    renderTable(obj)
+ </script>
+</body>
+</html>
